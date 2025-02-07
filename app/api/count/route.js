@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { NextResponse } from 'next/server';
 
-
 export async function POST(req) {
     try {
         const { text } = await req.json();
@@ -20,6 +19,7 @@ export async function POST(req) {
             char_count_no_spaces: charCountNoSpaces
         });
     } catch (error) {
+        console.error(error);  // Log the error for debugging purposes
         return NextResponse.json({ detail: "Invalid request" }, { status: 400 });
     }
 }
