@@ -13,23 +13,24 @@ type Count = {
 };
 
 export default function Home() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
   const [count, setCount] = useState<Count | null>(null);
-  const [excludePunctuation, setExcludePunctuation] = useState(false);
-  const [excludeCommas, setExcludeCommas] = useState(false);
-  const [excludeSpaces, setExcludeSpaces] = useState(false);
-  const [excludeNumbers, setExcludeNumbers] = useState(false);
+  const [excludePunctuation, setExcludePunctuation] = useState<boolean>(false);
+  const [excludeCommas, setExcludeCommas] = useState<boolean>(false);
+  const [excludeSpaces, setExcludeSpaces] = useState<boolean>(false);
+  const [excludeNumbers, setExcludeNumbers] = useState<boolean>(false);
 
   const handleCount = () => {
     const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
     const charCount = text.length;
 
-    const charCountNoSpaces = excludeSpaces ? text.replace(/\s/g, "").length : charCount;
-    const charCountNoCommas = excludeCommas ? text.replace(/,/g, "").length : charCount;
+    // If the checkbox is unchecked, set value to 0
+    const charCountNoSpaces = excludeSpaces ? text.replace(/\s/g, "").length : 0;
+    const charCountNoCommas = excludeCommas ? text.replace(/,/g, "").length : 0;
     const charCountNoPunctuation = excludePunctuation
       ? text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").length
-      : charCount;
-    const charCountNoNumbers = excludeNumbers ? text.replace(/[0-9]/g, "").length : charCount;
+      : 0;
+    const charCountNoNumbers = excludeNumbers ? text.replace(/[0-9]/g, "").length : 0;
 
     setCount({
       word_count: wordCount,
@@ -55,6 +56,7 @@ export default function Home() {
           placeholder="Type your text here..."
         />
 
+        {/* Exclusion Checkboxes */}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <label className="flex items-center space-x-2">
             <input
@@ -94,6 +96,7 @@ export default function Home() {
           </label>
         </div>
 
+        {/* Count Button */}
         <button
           onClick={handleCount}
           className="w-full bg-blue-500 text-white py-3 mt-6 rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:-translate-y-0.5"
@@ -101,6 +104,7 @@ export default function Home() {
           Count Words & Characters
         </button>
 
+        {/* Display Results */}
         {count && (
           <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-inner">
             <p className="text-gray-800">

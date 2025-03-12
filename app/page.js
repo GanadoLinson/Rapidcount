@@ -13,20 +13,27 @@ export default function Home() {
     const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
     const charCount = text.length;
 
-    const charCountNoSpaces = excludeSpaces ? text.replace(/\s/g, "").length : charCount;
-    const charCountNoCommas = excludeCommas ? text.replace(/,/g, "").length : charCount;
+    // If the checkbox is unchecked, set value to 0
+    const charCountNoSpaces = excludeSpaces
+      ? text.replace(/\s/g, "").length
+      : 0;
+    const charCountNoCommas = excludeCommas
+      ? text.replace(/,/g, "").length
+      : 0;
     const charCountNoPunctuation = excludePunctuation
       ? text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").length
-      : charCount;
-    const charCountNoNumbers = excludeNumbers ? text.replace(/[0-9]/g, "").length : charCount;
+      : 0;
+    const charCountNoNumbers = excludeNumbers
+      ? text.replace(/[0-9]/g, "").length
+      : 0;
 
     setCount({
       word_count: wordCount,
       char_count: charCount,
-      char_count_no_spaces: charCountNoSpaces,
-      char_count_no_commas: charCountNoCommas,
-      char_count_no_punctuation: charCountNoPunctuation,
-      char_count_no_numbers: charCountNoNumbers,
+      char_count_no_spaces: excludeSpaces ? charCountNoSpaces : 0,
+      char_count_no_commas: excludeCommas ? charCountNoCommas : 0,
+      char_count_no_punctuation: excludePunctuation ? charCountNoPunctuation : 0,
+      char_count_no_numbers: excludeNumbers ? charCountNoNumbers : 0,
     });
   };
 
@@ -44,6 +51,7 @@ export default function Home() {
           placeholder="Type your text here..."
         />
 
+        {/* Exclusion Checkboxes */}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <label className="flex items-center space-x-2">
             <input
@@ -83,6 +91,7 @@ export default function Home() {
           </label>
         </div>
 
+        {/* Count Button */}
         <button
           onClick={handleCount}
           className="w-full bg-blue-500 text-white py-3 mt-6 rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:-translate-y-0.5"
@@ -90,6 +99,7 @@ export default function Home() {
           Count Words & Characters
         </button>
 
+        {/* Display Results */}
         {count && (
           <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-inner">
             <p className="text-gray-800">
