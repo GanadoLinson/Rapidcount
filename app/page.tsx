@@ -56,7 +56,7 @@ export default function Home() {
           placeholder="Type your text here..."
         />
 
-        {/* Exclusion Checkboxes */}
+        {/* Exclusion Checkboxes /}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <label className="flex items-center space-x-2">
             <input
